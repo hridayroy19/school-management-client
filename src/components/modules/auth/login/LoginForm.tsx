@@ -13,30 +13,23 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registrationSchema } from "./registerValidation";
-import { registerUser } from "@/services/AuthService";
+import { loginSchema } from "./registerValidation";
+import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-
-const RegisterForm = () => {
-  const router = useRouter();
-
+const LoginForm = () => {
   const form = useForm({
-    resolver: zodResolver(registrationSchema),
+    resolver: zodResolver(loginSchema),
   });
-
-  const {
-    formState: { isSubmitting },
-  } = form;
-
-
+  const router = useRouter();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const res = await registerUser(data);
+      const res = await loginUser(data);
+      console.log(res)
       if (res?.status) {
         toast.success(res?.message);
-        router.push("/login");
+        router.push("/");
       } else {
         toast.error(res?.message);
       }
@@ -57,24 +50,6 @@ const RegisterForm = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              {/* Name */}
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your name"
-                        {...field}
-                        value={field.value || ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               {/* Email */}
               <FormField
                 control={form.control}
@@ -116,7 +91,7 @@ const RegisterForm = () => {
               />
 
               <Button type="submit" className="w-full mt-4">
-                {isSubmitting ? "Registering...." : "Register"}
+                Login
               </Button>
             </form>
           </Form>
@@ -126,4 +101,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
