@@ -1,10 +1,11 @@
+"use client";
+
+import { useUser } from "@/context/UserContext";
 
 const Home = () => {
-    return (
-        <div>
-            Home
-        </div>
-    );
+  const user = useUser();
+  console.log(user);
+  return <div>Home</div>;
 };
 
 export default Home;
