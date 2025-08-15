@@ -1,7 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Bot, Settings, SquareTerminal } from "lucide-react";
+import {
+  GraduationCap,
+  Settings,
+  SquareTerminal,
+  User,
+  UserRound,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -29,23 +35,19 @@ const data = {
       isActive: true,
     },
     {
+      title: "User",
+      url: "/admin/user",
+      icon: User,
+    },
+    {
+      title: "Student",
+      url: "/admin/dashboard/student",
+      icon: GraduationCap,
+    },
+    {
       title: "Teacher",
-      url: "/",
-      icon: Bot,
-      items: [
-        {
-          title: "Manage Products",
-          url: "",
-        },
-        {
-          title: "Manage Categories",
-          url: "",
-        },
-        {
-          title: "Manage Brands",
-          url: "",
-        },
-      ],
+      url: "/admin/dashboard/teacher",
+      icon: UserRound,
     },
 
     {
