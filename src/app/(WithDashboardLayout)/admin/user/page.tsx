@@ -1,11 +1,13 @@
 import ManageUser from "@/components/modules/dashboard/admin/users";
+import { getAllUsers } from "@/services/user";
 
-const page = () => {
+const Userpage = async () => {
+  const data = await getAllUsers();
   return (
     <div>
-      <ManageUser />
+      <ManageUser data={data.result} />
     </div>
   );
 };
 
-export default page;
+export default Userpage;

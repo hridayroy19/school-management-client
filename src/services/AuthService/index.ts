@@ -1,5 +1,6 @@
 "use server";
 import { jwtDecode } from "jwt-decode";
+import { revalidateTag } from "next/cache";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -14,6 +15,7 @@ export const registerUser = async (userData: FieldValues) => {
             },
             body: JSON.stringify(userData),
         });
+        revalidateTag("USERS")
         const result = await res.json();
         return result;
     } catch (error: any) {

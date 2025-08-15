@@ -1,9 +1,10 @@
 export interface IUser {
-    id: string;
+    _id: string;
     name: string;
     email: string;
     profile: string | "";
     role: "STUDENT" | "ADMIN" | "TEACHER";
     iat?: number;
     exp?: number;
+    userStatus?:string
 }

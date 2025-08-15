@@ -49,11 +49,11 @@ const CreateUserModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="text-white">Create Category</Button>
+        <Button className="text-white ">Create Category</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-white">Create User</DialogTitle>
+          <DialogTitle className="text-white text-center">Create User</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
