@@ -16,20 +16,30 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "./registerValidation";
 import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
+
+  const { setIsLoading } = useUser();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
   const router = useRouter();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await loginUser(data);
-      console.log(res)
+      setIsLoading(true);
       if (res?.status) {
         toast.success(res?.message);
-        router.push("/");
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
       } else {
         toast.error(res?.message);
       }
