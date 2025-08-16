@@ -21,12 +21,12 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { registrationSchema } from "@/components/modules/auth/register/registerValidation";
-import { registerUser } from "@/services/AuthService";
+import { ClassSchema } from "./classValidation";
+import { CreateClass } from "@/services/Class/Index";
 
-const CreateUserModal = () => {
+const CreateClassModal = () => {
   const form = useForm({
-    resolver: zodResolver(registrationSchema),
+    resolver: zodResolver(ClassSchema),
   });
 
   const {
@@ -35,7 +35,7 @@ const CreateUserModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const res = await registerUser(data);
+      const res = await CreateClass(data);
       if (res?.status) {
         toast.success(res?.message);
       } else {
@@ -49,11 +49,13 @@ const CreateUserModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="text-white ">Create User</Button>
+        <Button className="text-white ">Create Class</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-white text-center">Create User</DialogTitle>
+          <DialogTitle className="text-white text-center">
+            Create Class
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -69,7 +71,7 @@ const CreateUserModal = () => {
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter your name"
+                      placeholder="Class Name Class 10"
                       {...field}
                       value={field.value || ""}
                     />
@@ -81,14 +83,14 @@ const CreateUserModal = () => {
             {/* Email */}
             <FormField
               control={form.control}
-              name="email"
+              name="section"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Section</FormLabel>
                   <FormControl>
                     <Input
-                      type="email"
-                      placeholder="m@example.com"
+                      type="text"
+                      placeholder="A , B , C"
                       {...field}
                       value={field.value || ""}
                     />
@@ -101,14 +103,14 @@ const CreateUserModal = () => {
             {/* Password */}
             <FormField
               control={form.control}
-              name="password"
+              name="session"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Session</FormLabel>
                   <FormControl>
                     <Input
-                      type="password"
-                      placeholder="Enter your password"
+                      type="text"
+                      placeholder="section 2024-2025"
                       {...field}
                       value={field.value || ""}
                     />
@@ -119,7 +121,7 @@ const CreateUserModal = () => {
             />
 
             <Button type="submit" className="w-full bg-gray-900 mt-4">
-              {isSubmitting ? "Registering...." : "Register"}
+              {isSubmitting ? "creating...." : "Create"}
             </Button>
           </form>
         </Form>
@@ -128,4 +130,4 @@ const CreateUserModal = () => {
   );
 };
 
-export default CreateUserModal;
+export default CreateClassModal;

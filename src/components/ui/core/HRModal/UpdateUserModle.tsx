@@ -16,7 +16,7 @@ interface DeleteModalProps {
   onConfirm: () => void;
 }
 
-const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({
+const UpdateUserModal: React.FC<DeleteModalProps> = ({
   name,
   isOpen,
   onOpenChange,
@@ -30,9 +30,9 @@ const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({
             Delete User
           </DialogTitle>
           <DialogDescription className="text-white">
-            Are you sure you want to delete{" "}
+            Are you sure you want to Update{" "}
             <span className="font-semibold text-red-500">{name}</span>? This
-            action cannot be undone.
+            User Update.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -58,4 +58,4 @@ const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({
   );
 };
 
-export default DeleteConfirmationModal;
+export default UpdateUserModal;

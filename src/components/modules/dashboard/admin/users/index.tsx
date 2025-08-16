@@ -5,11 +5,12 @@ import { IUser } from "@/types";
 import CreateUserModal from "./CreateUserModal";
 import { HRTable } from "@/components/ui/core/HRTable";
 import { ColumnDef } from "@tanstack/react-table";
-import { Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { toast } from "sonner";
 import DeleteConfirmationModal from "@/components/ui/core/HRModal/DeleteConfirmationModal";
 import { deleteUser } from "@/services/user";
 import { useState } from "react";
+import UpdateUserModal from "@/components/ui/core/HRModal/UpdateUserModle";
 
 type IUserPropes = {
   data: IUser[];
@@ -28,6 +29,31 @@ const ManageUser = ({ data }: IUserPropes) => {
   };
 
   const handleDeleteConfirm = async () => {
+    try {
+      if (selectedId) {
+        const res = await deleteUser(selectedId);
+        console.log(res);
+        if (res.success) {
+          toast.success(res.message);
+          setModalOpen(false);
+        } else {
+          toast.error(res.message);
+        }
+      }
+    } catch (err: any) {
+      console.error(err?.message);
+    }
+  };
+
+
+  const handleUpdate = (data: IUser) => {
+    console.log(data);
+    setSelectedId(data?._id);
+    setSelectedItem(data?.name);
+    setModalOpen(true);
+  };
+
+  const handleUpdateUser = async () => {
     try {
       if (selectedId) {
         const res = await deleteUser(selectedId);
@@ -74,6 +100,19 @@ const ManageUser = ({ data }: IUserPropes) => {
         </button>
       ),
     },
+    {
+      accessorKey: "Update",
+      header: () => <div>Update</div>,
+      cell: ({ row }) => (
+        <button
+          className="text-red-500"
+          title="Update"
+          onClick={() => handleUpdate(row.original)}
+        >
+          <Edit className="w-5 h-5" />
+        </button>
+      ),
+    },
   ];
   return (
     <div>
@@ -87,6 +126,13 @@ const ManageUser = ({ data }: IUserPropes) => {
         isOpen={isModalOpen}
         onOpenChange={setModalOpen}
         onConfirm={handleDeleteConfirm}
+      />
+
+      <UpdateUserModal
+        name={selectedItem}
+        isOpen={isModalOpen}
+        onOpenChange={setModalOpen}
+        onConfirm={handleUpdateUser}
       />
     </div>
   );

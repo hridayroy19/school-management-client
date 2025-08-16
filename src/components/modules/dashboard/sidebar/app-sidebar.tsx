@@ -3,6 +3,7 @@
 import * as React from "react";
 import {
   GraduationCap,
+  House,
   Settings,
   SquareTerminal,
   User,
@@ -40,8 +41,13 @@ const data = {
       icon: User,
     },
     {
+      title: "Class",
+      url: "/admin/class",
+      icon: House,
+    },
+    {
       title: "Student",
-      url: "/admin/dashboard/student",
+      url: "/admin/student",
       icon: GraduationCap,
     },
     {
