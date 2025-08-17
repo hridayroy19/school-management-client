@@ -3,10 +3,10 @@ import { getAllStudent } from "@/services/student";
 
 const Studentpage = async () => {
   const data = await getAllStudent();
-//   console.log(data, "data");
+  //   console.log(data, "data");
   return (
     <div>
-      <StudentManage data={data?.data}/>
+      <StudentManage data={data?.data} />
     </div>
   );
 };

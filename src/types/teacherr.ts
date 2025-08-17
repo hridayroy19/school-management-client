@@ -1,5 +1,11 @@
+
+export interface IUser {
+  _id: string;
+  name: string;
+}
+
 export interface ITeacher {
-    userId: string
+    userId: IUser
     employeeId: string
     subjects: string[]
     assignedClasses: []

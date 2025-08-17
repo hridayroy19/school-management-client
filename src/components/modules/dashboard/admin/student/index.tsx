@@ -3,11 +3,12 @@
 import { IStudent } from "@/types";
 import { HRTable } from "@/components/ui/core/HRTable";
 import { ColumnDef } from "@tanstack/react-table";
-import { Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import DeleteConfirmationModal from "@/components/ui/core/HRModal/DeleteConfirmationModal";
 import { deleteStudent } from "@/services/student";
+import StudentUpdateModle from "@/components/ui/core/HRModal/StudentUpdateModle";
 
 type IStudentPropes = {
   data: IStudent[];
@@ -24,13 +25,18 @@ const StudentManage = ({ data }: IStudentPropes) => {
     setSelectedItem(data?.userId?.name || "");
     setModalOpen(true);
   };
+  
+  const handleUpdate = (data: IStudent) => {
+    setSelectedId(data?._id);
+    setModalOpen(true);
+  };
 
   const handleDeleteConfirm = async () => {
     try {
       if (selectedId) {
         const res = await deleteStudent(selectedId);
-        console.log(res);
-        if (res.success) {
+        console.log(res, "dta");
+        if (res.status) {
           toast.success(res.message);
           setModalOpen(false);
         } else {
@@ -80,6 +86,19 @@ const StudentManage = ({ data }: IStudentPropes) => {
         </button>
       ),
     },
+    {
+      accessorKey: "actions_2",
+      header: () => <div>Update</div>,
+      cell: ({ row }) => (
+        <button
+          className="text-blue-500"
+          title="Update"
+          onClick={() => handleUpdate(row.original)}
+        >
+          <Edit className="w-5 h-5" />
+        </button>
+      ),
+    },
   ];
   return (
     <div>
@@ -92,6 +111,11 @@ const StudentManage = ({ data }: IStudentPropes) => {
         isOpen={isModalOpen}
         onOpenChange={setModalOpen}
         onConfirm={handleDeleteConfirm}
+      />
+      <StudentUpdateModle
+        id={selectedId}
+        isOpen={isModalOpen}
+        onOpenChange={setModalOpen}
       />
     </div>
   );
