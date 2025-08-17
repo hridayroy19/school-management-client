@@ -7,7 +7,7 @@ import { Trash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import DeleteConfirmationModal from "@/components/ui/core/HRModal/DeleteConfirmationModal";
-import { deleteStudent } from "@/services/admin/student";
+import { deleteStudent } from "@/services/student";
 
 type IStudentPropes = {
   data: IStudent[];

@@ -1,5 +1,5 @@
 import StudentManage from "@/components/modules/dashboard/admin/student";
-import { getAllStudent } from "@/services/admin/student";
+import { getAllStudent } from "@/services/student";
 
 const Studentpage = async () => {
   const data = await getAllStudent();

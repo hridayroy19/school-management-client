@@ -13,7 +13,7 @@ const ClassManage = ({ data }: IUserPropes) => {
   const columns: ColumnDef<IUser>[] = [
     {
       accessorKey: "name",
-      header: "UserName",
+      header: "Class_Name",
     },
     {
       accessorKey: "section",
@@ -25,7 +25,7 @@ const ClassManage = ({ data }: IUserPropes) => {
     },
     {
       accessorKey: "_id",
-      header: "Id",
+      header: "Class Id",
     },
   ];
   return (

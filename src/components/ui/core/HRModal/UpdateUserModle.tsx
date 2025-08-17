@@ -8,49 +8,38 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-interface DeleteModalProps {
-  name: string | null;
+
+interface UpdateUserModalProps {
+  id: string | null;      
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  onConfirm: () => void;
 }
 
-const UpdateUserModal: React.FC<DeleteModalProps> = ({
-  name,
+const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
+  id,
   isOpen,
   onOpenChange,
-  onConfirm,
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="bg-[#1f1f33f6]">
         <DialogHeader>
           <DialogTitle className="text-red-600 font-bold text-2xl">
-            Delete User
+            Update User
           </DialogTitle>
           <DialogDescription className="text-white">
-            Are you sure you want to Update{" "}
-            <span className="font-semibold text-red-500">{name}</span>? This
-            User Update.
+            Are you sure you want to update user with ID:{" "}
+            <span className="font-semibold text-red-500">{id}</span>?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <Button
-            variant="outline"
-            className="bg-white"
-            onClick={() => onOpenChange(false)}
-          >
-            Cancel
+        <DialogFooter className="flex gap-2">
+          <Button variant="outline" className="bg-white">
+            <Link href={`/admin/user/${id}`}>Student</Link>
           </Button>
-          <Button
-            variant="destructive"
-            onClick={() => {
-              onConfirm();
-              onOpenChange(false);
-            }}
-          >
-            Confirm
+          <Button variant="destructive">
+            <Link href={`/admin/teacher/${id}`}>Teacher</Link>
           </Button>
         </DialogFooter>
       </DialogContent>

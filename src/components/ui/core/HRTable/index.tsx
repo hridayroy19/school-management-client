@@ -32,7 +32,7 @@ export function HRTable<TData, TValue>({
   });
 
   return (
-    <div className="my-5">
+    <div className="my-5 px-7">
       <Table>
         <TableHeader>
           {table?.getHeaderGroups().map((headerGroup) => (

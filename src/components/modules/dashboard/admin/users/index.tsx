@@ -45,29 +45,9 @@ const ManageUser = ({ data }: IUserPropes) => {
     }
   };
 
-
   const handleUpdate = (data: IUser) => {
-    console.log(data);
-    setSelectedId(data?._id);
-    setSelectedItem(data?.name);
+    setSelectedItem(data?._id);
     setModalOpen(true);
-  };
-
-  const handleUpdateUser = async () => {
-    try {
-      if (selectedId) {
-        const res = await deleteUser(selectedId);
-        console.log(res);
-        if (res.success) {
-          toast.success(res.message);
-          setModalOpen(false);
-        } else {
-          toast.error(res.message);
-        }
-      }
-    } catch (err: any) {
-      console.error(err?.message);
-    }
   };
 
   const columns: ColumnDef<IUser>[] = [
@@ -101,7 +81,7 @@ const ManageUser = ({ data }: IUserPropes) => {
       ),
     },
     {
-      accessorKey: "Update",
+      accessorKey: "action_4",
       header: () => <div>Update</div>,
       cell: ({ row }) => (
         <button
@@ -129,10 +109,9 @@ const ManageUser = ({ data }: IUserPropes) => {
       />
 
       <UpdateUserModal
-        name={selectedItem}
+        id={selectedItem}
         isOpen={isModalOpen}
         onOpenChange={setModalOpen}
-        onConfirm={handleUpdateUser}
       />
     </div>
   );

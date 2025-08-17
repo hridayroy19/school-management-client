@@ -52,7 +52,7 @@ const data = {
     },
     {
       title: "Teacher",
-      url: "/admin/dashboard/teacher",
+      url: "/admin/teacher",
       icon: UserRound,
     },
 
