@@ -13,26 +13,24 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { creteStudent } from "@/services/student";
-import { updateStudentSchema } from "./updateStudentSchema";
+import { teacherFormSchema } from "./updateTeacherSchema";
+import { creteTeacher } from "@/services/teacher";
 
 type userId = {
   id: string;
 };
 
-const UpdateStudentForm = ({ id }: userId) => {
+const UpdateTeacherForm = ({ id }: userId) => {
   const router = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(updateStudentSchema),
+    resolver: zodResolver(teacherFormSchema),
     defaultValues: {
-      rollNumber: "",
-      classId: "",
-      guardianName: "",
-      guardianPhone: "",
+      subjects: [],
+      assignedClasses: [],
       contactPhone: "",
       address: "",
-      enrollmentYear: "",
+      joinDate: "",
     },
   });
 
@@ -44,10 +42,10 @@ const UpdateStudentForm = ({ id }: userId) => {
     const payload = { ...data, userId: id };
     console.log(payload);
     try {
-      const res = await creteStudent(payload);
+      const res = await creteTeacher(payload);
       if (res?.status) {
         toast.success(res?.message);
-        router.push("/admin/student");
+        router.push("/admin/teacher");
       } else {
         toast.error(res?.message);
       }
@@ -59,25 +57,32 @@ const UpdateStudentForm = ({ id }: userId) => {
     <div className=" w-full flex justify-center h-screen items-center ">
       <Card className="w-[700px] text-white  bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-lg">Creat Student ...</CardTitle>
-          <p className="text-sm text-muted-foreground">update user Student</p>
+          <CardTitle className="text-lg">Creat Teacher ...</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            update user to Teacher
+          </p>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className=" grid grid-cols-2 gap-5 w-full justify-between">
-                {/* Roll Number */}
+              <div className="grid grid-cols-2 gap-5 w-full justify-between">
+                {/* Subjects */}
                 <FormField
                   control={form.control}
-                  name="rollNumber"
+                  name="subjects"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Student role</FormLabel>
+                      <FormLabel>Subjects</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="student role 100"
+                          placeholder="Enter subjects (comma separated)"
                           {...field}
                           value={field.value || ""}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.value.split(",").map((s) => s.trim())
+                            )
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -85,59 +90,26 @@ const UpdateStudentForm = ({ id }: userId) => {
                   )}
                 />
 
-                {/* Class ID */}
+                {/* Assigned Classes */}
                 <FormField
                   control={form.control}
-                  name="classId"
+                  name="assignedClasses"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Class ID</FormLabel>
+                      <FormLabel>Assigned Classes</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="6899bc830160d0f4de3417cf"
+                          placeholder="Class IDs (comma separated)"
                           {...field}
                           value={field.value || ""}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.value.split(",").map((c) => c.trim())
+                            )
+                          }
                         />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Guardian Name */}
-                <FormField
-                  control={form.control}
-                  name="guardianName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Guardian Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Guardian Name"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Guardian Phone */}
-                <FormField
-                  control={form.control}
-                  name="guardianPhone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Guardian Phone</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="+88017xxxxxxx"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-white" />
                     </FormItem>
                   )}
                 />
@@ -151,12 +123,12 @@ const UpdateStudentForm = ({ id }: userId) => {
                       <FormLabel>Contact Phone</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="88017xxxxxxx"
+                          placeholder="01785986325"
                           {...field}
                           value={field.value || ""}
                         />
                       </FormControl>
-                      <FormMessage className="text-white" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -170,7 +142,7 @@ const UpdateStudentForm = ({ id }: userId) => {
                       <FormLabel>Address</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="House 12, Road 5, Setabgonj, Dhaka"
+                          placeholder="123, Green Road, Setabgonj"
                           {...field}
                           value={field.value || ""}
                         />
@@ -180,13 +152,13 @@ const UpdateStudentForm = ({ id }: userId) => {
                   )}
                 />
 
-                {/* Enrollment Year */}
+                {/* Join Date */}
                 <FormField
                   control={form.control}
-                  name="enrollmentYear"
+                  name="joinDate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Enrollment Year</FormLabel>
+                      <FormLabel>Join Date</FormLabel>
                       <FormControl>
                         <Input
                           type="date"
@@ -201,7 +173,7 @@ const UpdateStudentForm = ({ id }: userId) => {
               </div>
 
               <Button type="submit" className="w-full mt-4">
-                {isSubmitting ? "Student..." : "Add Student"}
+                {isSubmitting ? "Saving..." : "Save Teacher"}
               </Button>
             </form>
           </Form>
@@ -211,4 +183,4 @@ const UpdateStudentForm = ({ id }: userId) => {
   );
 };
 
-export default UpdateStudentForm;
+export default UpdateTeacherForm;

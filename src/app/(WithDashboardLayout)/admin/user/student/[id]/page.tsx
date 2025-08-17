@@ -3,8 +3,9 @@
 import UpdateStudentForm from "@/components/modules/dashboard/admin/users/UpdateStudentForm";
 import { useParams } from "next/navigation";
 
-const UserPage = () => {
-  const { id } = useParams();
+const StudentUpdate = () => {
+  const params = useParams();
+  const id = params?.id as string;
   return (
     <div>
       <UpdateStudentForm id={id} />
@@ -12,4 +13,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default StudentUpdate;

@@ -36,10 +36,10 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
         </DialogHeader>
         <DialogFooter className="flex gap-2">
           <Button variant="outline" className="bg-white">
-            <Link href={`/admin/user/${id}`}>Student</Link>
+            <Link href={`/admin/user/student/${id}`}>Student</Link>
           </Button>
           <Button variant="destructive">
-            <Link href={`/admin/teacher/${id}`}>Teacher</Link>
+            <Link href={`/admin/user/teacher/${id}`}>Teacher</Link>
           </Button>
         </DialogFooter>
       </DialogContent>
