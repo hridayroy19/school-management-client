@@ -15,7 +15,7 @@ const Resultpage = async () => {
     // console.log(user)
   
   return (
-    <div>
+    <>
           <ResultManage
         data={data.data}
         classes={cls.data}
@@ -23,7 +23,7 @@ const Resultpage = async () => {
         students={student.data}
         user={user}
       />
-    </div>
+    </>
   );
 };
 

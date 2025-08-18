@@ -1,17 +1,5 @@
 "use client";
-
 import * as React from "react";
-import {
-  Book,
-  GraduationCap,
-  House,
-  Pen,
-  Settings,
-  SquareTerminal,
-  User,
-  UserRound,
-} from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -25,64 +13,21 @@ import {
 import { NavMain } from "./nav-menu";
 import { NavUser } from "./nav-user";
 import Link from "next/link";
-// import Logo from "./public/assets/logo.png"
 import Logo from "../../../../../public/assets/logo.png";
 import Image from "next/image";
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/admin",
-      icon: SquareTerminal,
-      isActive: true,
-    },
-    {
-      title: "User",
-      url: "/admin/user",
-      icon: User,
-    },
-    {
-      title: "Class",
-      url: "/admin/class",
-      icon: House,
-    },
-    {
-      title: "Subject",
-      url: "/admin/subject",
-      icon: Book,
-    },
-    {
-      title: "Student",
-      url: "/admin/student",
-      icon: GraduationCap,
-    },
-    {
-      title: "Teacher",
-      url: "/admin/teacher",
-      icon: UserRound,
-    },
-    {
-      title: "Create-Result",
-      url: "/admin/result",
-      icon: Pen,
-    },
+import { data } from "./nev-item";
+import { IUser } from "@/types";
 
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-      items: [
-        {
-          title: "Profile",
-          url: "/profile",
-        },
-      ],
-    },
-  ],
-};
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  user: IUser;
+}
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  // filter items by role
+  const filteredNav = data.navMain.filter(
+    (item) => !item.roles || item.roles.includes(user.role)
+  );
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -105,7 +50,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={filteredNav} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

@@ -7,35 +7,34 @@ import { HRTable } from "@/components/ui/core/HRTable";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Trash } from "lucide-react";
 import { toast } from "sonner";
-import DeleteConfirmationModal from "@/components/ui/core/HRModal/DeleteConfirmationModal";
 import { deleteUser } from "@/services/user";
 import { useState } from "react";
 import UpdateUserModal from "@/components/ui/core/HRModal/UpdateUserModle";
+import DeleteConfirmationModal from "@/components/ui/core/HRModal/DeleteConfirmationModal";
 
 type IUserPropes = {
   data: IUser[];
 };
 
 const ManageUser = ({ data }: IUserPropes) => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [selectedUserName, setSelectedUserName] = useState<string | null>(null);
 
-  const handleDelete = (data: IUser) => {
-    console.log(data);
-    setSelectedId(data?._id);
-    setSelectedItem(data?.name);
-    setModalOpen(true);
+  const handleDelete = (user: IUser) => {
+    setSelectedUserId(user._id);
+    setSelectedUserName(user.name);
+    setDeleteModalOpen(true);
   };
 
   const handleDeleteConfirm = async () => {
     try {
-      if (selectedId) {
-        const res = await deleteUser(selectedId);
-        console.log(res);
+      if (selectedUserId) {
+        const res = await deleteUser(selectedUserId);
         if (res.success) {
           toast.success(res.message);
-          setModalOpen(false);
+          setDeleteModalOpen(false);
         } else {
           toast.error(res.message);
         }
@@ -45,9 +44,9 @@ const ManageUser = ({ data }: IUserPropes) => {
     }
   };
 
-  const handleUpdate = (data: IUser) => {
-    setSelectedItem(data?._id);
-    setModalOpen(true);
+  const handleUpdate = (user: IUser) => {
+    setSelectedUserId(user._id);
+    setUpdateModalOpen(true);
   };
 
   const columns: ColumnDef<IUser>[] = [
@@ -68,7 +67,7 @@ const ManageUser = ({ data }: IUserPropes) => {
       header: "Status",
     },
     {
-      accessorKey: "action",
+      accessorKey: "acti",
       header: () => <div>Action</div>,
       cell: ({ row }) => (
         <button
@@ -81,7 +80,7 @@ const ManageUser = ({ data }: IUserPropes) => {
       ),
     },
     {
-      accessorKey: "action_4",
+      accessorKey: "action_7",
       header: () => <div>Update</div>,
       cell: ({ row }) => (
         <button
@@ -102,16 +101,16 @@ const ManageUser = ({ data }: IUserPropes) => {
       </div>
       <HRTable data={data} columns={columns} />
       <DeleteConfirmationModal
-        name={selectedItem}
-        isOpen={isModalOpen}
-        onOpenChange={setModalOpen}
+        name={selectedUserName}
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
         onConfirm={handleDeleteConfirm}
       />
 
       <UpdateUserModal
-        id={selectedItem}
-        isOpen={isModalOpen}
-        onOpenChange={setModalOpen}
+        id={selectedUserId}
+        isOpen={isUpdateModalOpen}
+        onOpenChange={setUpdateModalOpen}
       />
     </div>
   );

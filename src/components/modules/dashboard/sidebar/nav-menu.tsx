@@ -20,20 +20,19 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+export interface NavItem {
+  id: string;
+  title: string;
+  url: string;
+  icon: LucideIcon; 
+  isActive?: boolean;
+  items?: NavItem[];
+  roles?: ("ADMIN" | "STUDENT" | "TEACHER")[];
+}
+
+
+
+export function NavMain({ items }: { items: NavItem[] }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>

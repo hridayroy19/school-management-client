@@ -11,7 +11,7 @@ type IResultProps = {
   classes: IClass[];
   subjects: ISubject[];
   students: IStudent[];
-  user:IUser[]
+  user:IUser
 };
 
 const ResultManage = ({ data, classes, subjects, students,user }: IResultProps) => {

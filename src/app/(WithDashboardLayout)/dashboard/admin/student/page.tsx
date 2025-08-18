@@ -5,9 +5,9 @@ const Studentpage = async () => {
   const data = await getAllStudent();
   //   console.log(data, "data");
   return (
-    <div>
+    <>
       <StudentManage data={data?.data} />
-    </div>
+    </>
   );
 };
 

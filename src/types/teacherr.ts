@@ -1,16 +1,17 @@
 
-export interface IUser {
+export interface IUserData {
   _id: string;
   name: string;
 }
 
 export interface ITeacher {
-    userId: IUser
-    employeeId: string
-    subjects: string[]
-    assignedClasses: []
-    contactPhone: string
-    address: string
-    joinDate: Date
-    _id:string
+    _id: string
+  userId:IUserData
+  employeeId: string
+  subjects: string[]
+  assignedClasses: []
+  contactPhone: string
+  address: string
+  joinDate: Date
+
 }

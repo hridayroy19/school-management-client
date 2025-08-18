@@ -28,7 +28,7 @@ type Props = {
   classes: IClass[];
   subjects: ISubject[];
   students: IStudent[];
-  user: IUser; // single user (not array)
+  user: IUser;
 };
 
 const CreateResultModal = ({ classes, subjects, students, user }: Props) => {
@@ -52,7 +52,7 @@ const CreateResultModal = ({ classes, subjects, students, user }: Props) => {
   } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const payload = { ...data, createdBy: user.id }; // single user
+    const payload = { ...data, createdBy: user.id };
     console.log(payload);
 
     try {

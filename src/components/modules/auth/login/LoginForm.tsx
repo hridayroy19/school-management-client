@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "./registerValidation";
 import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 
 const LoginForm = () => {
@@ -25,21 +24,21 @@ const LoginForm = () => {
   });
 
   const { setIsLoading } = useUser();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirectPath");
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await loginUser(data);
       setIsLoading(true);
-      if (res?.status) {
+
+      if (res?.status && res?.data?.role) {
         toast.success(res?.message);
-        if (redirect) {
-          router.push(redirect);
-        } else {
-          router.push("/");
-        }
+
+        // Redirect based on role
+        const role = res.data.role;
+        if (role === "ADMIN") router.push("/dashboard/admin");
+        else if (role === "TEACHER") router.push("/dashboard/teacher");
+        else router.push("/dashboard/student");
       } else {
         toast.error(res?.message);
       }
@@ -49,7 +48,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=" ">
+    <div>
       <Card className="w-[350px] text-white  bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
         <CardHeader>
           <CardTitle className="text-lg">Login your account</CardTitle>

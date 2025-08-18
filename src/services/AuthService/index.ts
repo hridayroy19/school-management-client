@@ -37,7 +37,7 @@ export const loginUser = async (userData: FieldValues) => {
         });
 
         const result = await res.json();
-        console.log(result,"data")
+        console.log(result, "data")
         if (result.status) {
             (await cookies()).set("token", result.token);
         }
@@ -50,20 +50,20 @@ export const loginUser = async (userData: FieldValues) => {
 
 
 export const getCurrentUser = async () => {
-  const accessToken = (await cookies()).get("token")?.value;
-  let decodedData = null;
+    const accessToken = (await cookies()).get("token")?.value;
+    let decodedData = null;
 
-  if (accessToken) {
-    decodedData = await jwtDecode(accessToken);
-    return decodedData;
-  } else {
-    return null;
-  }
+    if (accessToken) {
+        decodedData = await jwtDecode(accessToken);
+        return decodedData;
+    } else {
+        return null;
+    }
 };
 
 
 
 
 export const logout = async () => {
-  (await cookies()).delete("token");
+    (await cookies()).delete("token");
 };

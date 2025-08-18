@@ -1,53 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "./services/AuthService";
 
-type Role = keyof typeof roleBasedPrivateRoutes;
-
 const authRoutes = ["/login"];
 
-const roleBasedPrivateRoutes = {
-    STUDENT: [/^\/student/],
-    ADMIN: [/^\/admin/],
-    TEACHER: [/^\/teacher/],
+const roleBasedPrivateRoutes: Record<string, RegExp[]> = {
+  STUDENT: [/^\/dashboard\/student/],
+  ADMIN: [/^\/dashboard\/admin/],
+  TEACHER: [/^\/dashboard\/teacher/],
 };
 
-export const middleware = async (request: NextRequest) => {
-    const { pathname } = request.nextUrl;
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const userInfo = await getCurrentUser();
 
-    const userInfo = await getCurrentUser();
-
-    if (!userInfo) {
-        if (authRoutes.includes(pathname)) {
-            return NextResponse.next();
-        } else {
-            return NextResponse.redirect(
-                new URL(
-                    `http://localhost:3000/login?redirectPath=${pathname}`,
-                    request.url
-                )
-            );
-        }
+  // Not logged in → only login allowed
+  if (!userInfo) {
+    if (authRoutes.includes(pathname)) {
+      return NextResponse.next();
     }
+    return NextResponse.redirect(
+      new URL(`/login?redirectPath=${pathname}`, request.url)
+    );
+  }
 
-    if (userInfo?.role && roleBasedPrivateRoutes[userInfo?.role as Role]) {
-        const routes = roleBasedPrivateRoutes[userInfo?.role as Role];
-        if (routes.some((route) => pathname.match(route))) {
-            return NextResponse.next();
-        }
-    }
+  // Logged in → check if user has access
+  const allowedRoutes = roleBasedPrivateRoutes[userInfo.role];
+  if (allowedRoutes && allowedRoutes.some((route) => pathname.match(route))) {
+    return NextResponse.next();
+  }
 
-    return NextResponse.redirect(new URL("/login", request.url));
-};
+  // 
+  const defaultRedirect =
+    userInfo.role === "ADMIN"
+      ? "/dashboard/admin"
+      : userInfo.role === "TEACHER"
+        ? "/dashboard/teacher"
+        : "/dashboard/student";
+
+  return NextResponse.redirect(new URL(defaultRedirect, request.url));
+}
 
 export const config = {
-    matcher: [
-
-        "/login",
-        "/teacher",
-        "/teacher/:page*",
-        "/admin",
-        "/admin/:page*",
-        "/student",
-        "/student/:page*",
-    ],
+  matcher: [
+    "/",
+    "/login",
+    "/dashboard/admin/:path*",
+    "/dashboard/student/:path*",
+    "/dashboard/teacher/:path*",
+  ],
 };

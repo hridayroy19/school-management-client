@@ -16,12 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema } from "./registerValidation";
 import { registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-
 
 const RegisterForm = () => {
-  const router = useRouter();
-
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
@@ -30,13 +26,11 @@ const RegisterForm = () => {
     formState: { isSubmitting },
   } = form;
 
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await registerUser(data);
       if (res?.status) {
         toast.success(res?.message);
-        router.push("/login");
       } else {
         toast.error(res?.message);
       }

@@ -1,3 +1,4 @@
+"use client";
 import LoginForm from "@/components/modules/auth/login/LoginForm";
 
 import React from "react";
