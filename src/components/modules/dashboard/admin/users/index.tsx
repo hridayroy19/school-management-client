@@ -85,7 +85,7 @@ const ManageUser = ({ data }: IUserPropes) => {
       header: () => <div>Update</div>,
       cell: ({ row }) => (
         <button
-          className="text-red-500"
+          className="text-green-700"
           title="Update"
           onClick={() => handleUpdate(row.original)}
         >

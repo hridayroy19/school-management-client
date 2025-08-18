@@ -2,8 +2,10 @@
 
 import * as React from "react";
 import {
+  Book,
   GraduationCap,
   House,
+  Pen,
   Settings,
   SquareTerminal,
   User,
@@ -46,6 +48,11 @@ const data = {
       icon: House,
     },
     {
+      title: "Subject",
+      url: "/admin/subject",
+      icon: Book,
+    },
+    {
       title: "Student",
       url: "/admin/student",
       icon: GraduationCap,
@@ -54,6 +61,11 @@ const data = {
       title: "Teacher",
       url: "/admin/teacher",
       icon: UserRound,
+    },
+    {
+      title: "Create-Result",
+      url: "/admin/result",
+      icon: Pen,
     },
 
     {
@@ -81,9 +93,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <div className="flex items-start justify-center">
                   <Image
                     src={Logo}
-                    width={170}
+                    width={180}
                     height={50}
-                    className="object-cover"
+                    className="object-cover "
                     alt="logo"
                   />
                 </div>
