@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, LogOut} from "lucide-react";
+import { ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -20,6 +20,7 @@ import { useUser } from "@/context/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import { protectedRoutes } from "@/app/contants";
 import { logout } from "@/services/AuthService";
+import Image from "next/image";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -47,7 +48,7 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage alt={user?.name} />
+                <AvatarImage />
                 <AvatarFallback className="rounded-lg">
                   {user?.role}
                 </AvatarFallback>
@@ -68,9 +69,16 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage alt={user?.profile} />
+                  <AvatarImage alt="https://i.ibb.co.com/zHbc0jXV/images-1-removebg-preview.png" />
                   <AvatarFallback className="rounded-lg">
-                    {user?.profile}
+                    <Image
+                      src={
+                        "https://i.ibb.co.com/zHbc0jXV/images-1-removebg-preview.png"
+                      }
+                      alt="image"
+                      width={100}
+                      height={100}
+                    />
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

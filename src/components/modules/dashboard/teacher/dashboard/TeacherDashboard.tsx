@@ -11,7 +11,6 @@ interface Student {
 }
 
 export default function TeacherDashboard() {
-  // Static data for demo
   const assignedStudents: Student[] = [
     {
       id: "1",

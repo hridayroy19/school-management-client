@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Loading from "@/app/loading";
 
 // Student interface
 interface StudentClass {
@@ -61,7 +62,7 @@ const ViewDetalPage = () => {
     if (classId) fetchClass();
   }, [classId]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading/>;
   return (
     <div className="p-6 space-y-6">
       {/* Class Info */}

@@ -2,7 +2,6 @@
 import {
     Bell,
     Book,
-    BookMarked,
     BookOpen,
     FileText,
     GraduationCap,
@@ -89,13 +88,6 @@ export const data: { navMain: NavItem[] } = {
             title: "Result Entry",
             url: "/dashboard/teacher/result",
             icon: FileText,
-            roles: ["TEACHER"],
-        },
-        {
-            id: "subject-management",
-            title: "Subject Management",
-            url: "/dashboard/teacher/subject",
-            icon: BookMarked,
             roles: ["TEACHER"],
         },
         {
