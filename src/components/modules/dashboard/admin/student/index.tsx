@@ -15,30 +15,32 @@ type IStudentPropes = {
 };
 
 const StudentManage = ({ data }: IStudentPropes) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  // delete modal state
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  // update modal state
+  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const handleDelete = (data: IStudent) => {
-    console.log(data);
     setSelectedId(data?._id);
     setSelectedItem(data?.userId?.name || "");
-    setModalOpen(true);
+    setDeleteModalOpen(true);
   };
-  
+
   const handleUpdate = (data: IStudent) => {
     setSelectedId(data?._id);
-    setModalOpen(true);
+    setUpdateModalOpen(true);
   };
 
   const handleDeleteConfirm = async () => {
     try {
       if (selectedId) {
         const res = await deleteStudent(selectedId);
-        console.log(res, "dta");
         if (res.status) {
           toast.success(res.message);
-          setModalOpen(false);
+          setDeleteModalOpen(false);
         } else {
           toast.error(res.message);
         }
@@ -59,7 +61,7 @@ const StudentManage = ({ data }: IStudentPropes) => {
     },
     {
       accessorKey: "guardianPhone",
-      header: "guardianPhone",
+      header: "Guardian Phone",
     },
     {
       accessorKey: "address",
@@ -67,11 +69,11 @@ const StudentManage = ({ data }: IStudentPropes) => {
     },
     {
       accessorKey: "rollNumber",
-      header: "rollNumber",
+      header: "Roll Number",
     },
     {
       accessorKey: "contactPhone",
-      header: "contactPhone",
+      header: "Contact Phone",
     },
     {
       accessorKey: "actions",
@@ -100,22 +102,28 @@ const StudentManage = ({ data }: IStudentPropes) => {
       ),
     },
   ];
+
   return (
     <div>
       <div className="flex text-white items-center justify-between">
         <h1 className="text-xl font-bold">Manage Student</h1>
       </div>
+
       <HRTable data={data} columns={columns} />
+
+      {/* Delete Modal */}
       <DeleteConfirmationModal
         name={selectedItem}
-        isOpen={isModalOpen}
-        onOpenChange={setModalOpen}
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
         onConfirm={handleDeleteConfirm}
       />
+
+      {/* Update Modal */}
       <StudentUpdateModle
         id={selectedId}
-        isOpen={isModalOpen}
-        onOpenChange={setModalOpen}
+        isOpen={isUpdateModalOpen}
+        onOpenChange={setUpdateModalOpen}
       />
     </div>
   );

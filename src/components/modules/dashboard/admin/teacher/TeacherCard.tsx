@@ -6,7 +6,6 @@ import { ITeacher } from "@/types";
 import { toast } from "sonner";
 import { deleteTeacher } from "@/services/teacher";
 import { useState } from "react";
-import StudentUpdateModle from "@/components/ui/core/HRModal/StudentUpdateModle";
 import TeacherUpdateModle from "@/components/ui/core/HRModal/TeacherUpdateModle";
 
 type TeacherCardProps = {

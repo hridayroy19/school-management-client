@@ -8,7 +8,7 @@ export interface IStudent {
     _id:string
   userId: IUserRef | null
   rollNumber: string
-  classId: string 
+  classId:  { name: string }
   guardianName: string
   guardianPhone: string
   contactPhone: string

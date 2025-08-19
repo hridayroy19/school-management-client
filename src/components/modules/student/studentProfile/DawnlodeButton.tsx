@@ -1,28 +1,22 @@
 "use client";
 
-// components/modules/student/PDFDownloadButton.tsx
 import React from "react";
 import dynamic from "next/dynamic";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StudentReportPDF from "./StudentResultPDF";
 import { IStudent, ResultStudent } from "@/types";
-
-interface User {
-  name: string;
-  email: string;
-}
+import { IStudentuser } from ".";
 
 interface Props {
   results: ResultStudent[];
   student: IStudent;
-  user: User;
+  user: IStudentuser;
 }
 
 const DynamicDownloadButton = dynamic(
   () =>
     import("@react-pdf/renderer").then(({ PDFDownloadLink }) => {
-      // Return a component that uses PDFDownloadLink
       // eslint-disable-next-line react/display-name
       return ({ results, student, user }: Props) => (
         <PDFDownloadLink
@@ -36,15 +30,15 @@ const DynamicDownloadButton = dynamic(
               className="w-full sm:w-auto flex items-center gap-2"
               disabled={loading}
             >
-              <Download name="download" />
-              {loading ? "Generating PDF..." : "Download"}
+              <Download className="w-4 h-4" /> 
+              {loading ? "Generating PDF..." : "Download Result"}
             </Button>
           )}
         </PDFDownloadLink>
       );
     }),
   {
-    ssr: false, // This is crucial for fixing the error
+    ssr: false,
     loading: () => <Button disabled>Loading...</Button>,
   }
 );

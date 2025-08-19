@@ -2,7 +2,7 @@
 import { IStudent } from "@/types";
 import { HRTable } from "@/components/ui/core/HRTable";
 import { ColumnDef } from "@tanstack/react-table";
-import CreateUserModal from "../users/CreateUserModal";
+import SubjectCreateModal from "@/components/ui/core/HRModal/SubjectCreateModle";
 type IStudentPropes = {
   data: IStudent[];
 };
@@ -30,7 +30,7 @@ const SubjectManage = ({ data }: IStudentPropes) => {
     <div>
       <div className="flex text-white items-center justify-between">
         <h1 className="text-xl font-bold">Manage Subject</h1>
-        <CreateUserModal />
+        <SubjectCreateModal />
       </div>
 
       <HRTable data={data} columns={columns} />

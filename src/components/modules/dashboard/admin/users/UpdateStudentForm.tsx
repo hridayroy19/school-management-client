@@ -47,7 +47,7 @@ const UpdateStudentForm = ({ id }: userId) => {
       const res = await creteStudent(payload);
       if (res?.status) {
         toast.success(res?.message);
-        router.push("/admin/student");
+        router.push("/dashboard/admin/student");
       } else {
         toast.error(res?.message);
       }

@@ -90,14 +90,5 @@ export const data: { navMain: NavItem[] } = {
             isActive: true,
             roles: ["STUDENT"],
         },
-        {
-            id: "dashboard-student",
-            title: "Profile",
-            url: "/dashboard/student/profile",
-            icon: SquareTerminal,
-            isActive: true,
-            roles: ["STUDENT"],
-        },
-
     ],
 };

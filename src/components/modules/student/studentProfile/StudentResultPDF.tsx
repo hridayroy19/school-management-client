@@ -1,5 +1,5 @@
+"use client";
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
 import {
   Page,
   Text,
@@ -8,13 +8,14 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { IStudent, ResultStudent } from "@/types";
 
+import { IStudent, ResultStudent } from "@/types";
+import { IStudentuser } from ".";
 
 interface StudentReportPDFProps {
   results: ResultStudent[];
   student: IStudent;
-  user: { name: string; email: string };
+  user: IStudentuser;
 }
 
 // Create styles for the PDF document
@@ -120,7 +121,6 @@ const StudentReportPDF: React.FC<StudentReportPDFProps> = ({
   student,
   user,
 }) => {
-  // Calculate totals dynamically from the results prop
   const totalMarksObtained = results.reduce(
     (sum, r) => sum + r.marksObtained,
     0
@@ -166,7 +166,9 @@ const StudentReportPDF: React.FC<StudentReportPDFProps> = ({
           </View>
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Class</Text>
-            <Text style={styles.detailValue}>{student?.classId?.name as string}</Text>
+            <Text style={styles.detailValue}>
+              {student?.classId?.name as string}
+            </Text>
           </View>
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Address</Text>

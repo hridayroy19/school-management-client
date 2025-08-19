@@ -7,7 +7,7 @@ import { FieldValues } from "react-hook-form";
 
 export const creteSubject = async (userData: FieldValues) => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/teacher/create-techer`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/subject/create-subject`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
