@@ -10,3 +10,15 @@ export interface IResult {
     createdBy: string
     _id:string
 }
+
+
+
+export interface ResultStudent {
+  _id: string;
+  term: string;
+  classId: { name: string };
+  subjectId: { name: string };
+  grade: string;
+  marksObtained: number;
+  gradePoint: number;
+}

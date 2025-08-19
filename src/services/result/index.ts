@@ -20,9 +20,6 @@ export const getAllResult = async () => {
     }
 };
 
-
-
-
 export const CreateResult = async (userData: FieldValues) => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/result/create-result`, {
@@ -35,6 +32,22 @@ export const CreateResult = async (userData: FieldValues) => {
         revalidateTag("rsult")
         const result = await res.json();
         return result;
+    } catch (error: any) {
+        return Error(error);
+    }
+};
+
+
+export const getResultById = async ({ id }: { id: string }) => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/result/${id}`, {
+            next: {
+                tags: ["rsult"], 
+            },
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch result");
+        return res.json();
     } catch (error: any) {
         return Error(error);
     }
