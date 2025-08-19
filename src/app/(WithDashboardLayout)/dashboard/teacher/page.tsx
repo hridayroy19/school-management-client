@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
-const page = () => {
-    return (
-        <div>
-           tecager 
-        </div>
-    );
+const TeacherPage = () => {
+  return <div>tecager</div>;
 };
 
-export default page;
+export default TeacherPage;

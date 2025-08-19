@@ -1,6 +1,10 @@
 
 import {
+    Bell,
     Book,
+    BookMarked,
+    BookOpen,
+    FileText,
     GraduationCap,
     House,
     Pen,
@@ -74,12 +78,34 @@ export const data: { navMain: NavItem[] } = {
             roles: ["TEACHER"],
         },
         {
-            id: "teacher-result",
-            title: "Create-Result",
-            url: "/dashboard/teacher/result",
-            icon: Pen,
+            id: "myClasses",
+            title: "My Classes",
+            url: "/dashboard/teacher/myClasses",
+            icon: BookOpen,
             roles: ["TEACHER"],
         },
+        {
+            id: "result",
+            title: "Result Entry",
+            url: "/dashboard/teacher/result",
+            icon: FileText,
+            roles: ["TEACHER"],
+        },
+        {
+            id: "subject-management",
+            title: "Subject Management",
+            url: "/dashboard/teacher/subject",
+            icon: BookMarked,
+            roles: ["TEACHER"],
+        },
+        {
+            id: "notifications",
+            title: "Notifications",
+            url: "/dashboard/teacher/notifications",
+            icon: Bell,
+            roles: ["TEACHER"],
+        },
+
 
         // Student
         {

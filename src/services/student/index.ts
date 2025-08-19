@@ -79,3 +79,17 @@ export const updateStudent = async (userId: string, data: any): Promise<any> => 
 
 
 
+export const getStudentByClass = async ({ id }: { id: string }) => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/student/classId/${id}`, {
+            next: {
+                tags: ["STUDENT"],
+            },
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch result");
+        return res.json();
+    } catch (error: any) {
+        return Error(error);
+    }
+};

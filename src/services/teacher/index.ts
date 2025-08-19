@@ -74,3 +74,20 @@ export const updateTeacherr = async (userId: string, data: any): Promise<any> =>
         throw error;
     }
 };
+
+
+
+export const getClsddById = async ({ id }: { id: string }) => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/teacher/assient-student/${id}`, {
+            next: {
+                tags: ["TEACHER"],
+            },
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch result");
+        return res.json();
+    } catch (error: any) {
+        return Error(error);
+    }
+};
