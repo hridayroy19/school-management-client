@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
 
@@ -11,6 +12,7 @@ export const creteTeacher = async (userData: FieldValues) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: (await cookies()).get("token")!.value,
             },
             body: JSON.stringify(userData),
         });
@@ -25,10 +27,14 @@ export const creteTeacher = async (userData: FieldValues) => {
 
 export const getAllTeacherr = async () => {
     try {
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/teacher`, {
             next: {
                 tags: ["TEACHER"],
             },
+            headers: {
+                Authorization: (await cookies()).get("token")!.value,
+            }
         });
 
         return res.json();
@@ -41,8 +47,12 @@ export const getAllTeacherr = async () => {
 export const deleteTeacher = async (userId: string): Promise<any> => {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_API}/api/teacher/create-delete/${userId}`,
-            { method: "DELETE", }
+            `${process.env.NEXT_PUBLIC_BASE_API}/api/teacher/techer-delete/${userId}`,
+            {
+                method: "DELETE", headers: {
+                    Authorization: (await cookies()).get("token")!.value,
+                }
+            }
 
         );
         revalidateTag("TEACHER")
@@ -55,12 +65,14 @@ export const deleteTeacher = async (userId: string): Promise<any> => {
 
 export const updateTeacherr = async (userId: string, data: any): Promise<any> => {
     try {
+
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_API}/api/teacher/update-techer/${userId}`,
             {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: (await cookies()).get("token")!.value,
                 },
                 body: JSON.stringify(data),
             }

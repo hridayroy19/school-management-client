@@ -17,6 +17,7 @@ type IUserPropes = {
 };
 
 const ManageUser = ({ data }: IUserPropes) => {
+  // console.log(data)
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);

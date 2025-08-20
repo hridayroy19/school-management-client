@@ -31,6 +31,9 @@ export const getAllClass = async () => {
             next: {
                 tags: ["class"],
             },
+            headers:{
+                Authorization: (await cookies()).get("token")!.value,
+            }
         });
 
         return res.json();

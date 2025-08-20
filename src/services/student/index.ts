@@ -1,13 +1,18 @@
 "use server"
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
+import { FieldValues } from "react-hook-form";
 
 export const creteStudent = async (userData: FieldValues) => {
     try {
+        const cookieStore = cookies();
+        const token = (await cookieStore).get("token")?.value;
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/student/create-student`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: token || "",
             },
             body: JSON.stringify(userData),
         });
@@ -20,15 +25,17 @@ export const creteStudent = async (userData: FieldValues) => {
 };
 
 
-
-import { revalidateTag } from "next/cache";
-import { FieldValues } from "react-hook-form";
 export const getAllStudent = async () => {
     try {
+        const cookieStore = cookies();
+        const token = (await cookieStore).get("token")?.value;
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/student`, {
             next: {
                 tags: ["STUDENT"],
             },
+            headers: {
+                Authorization: token || "",
+            }
         });
 
         return res.json();
@@ -39,9 +46,15 @@ export const getAllStudent = async () => {
 
 export const deleteStudent = async (userId: string): Promise<any> => {
     try {
+        const cookieStore = cookies();
+        const token = (await cookieStore).get("token")?.value;
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_API}/api/student/delete-student/${userId}`,
-            { method: "DELETE", }
+            {
+                method: "DELETE", headers: {
+                    Authorization: token || "",
+                }
+            }
 
         );
         revalidateTag("STUDENT")
@@ -53,12 +66,15 @@ export const deleteStudent = async (userId: string): Promise<any> => {
 
 export const updateStudent = async (userId: string, data: any): Promise<any> => {
     try {
+        const cookieStore = cookies();
+        const token = (await cookieStore).get("token")?.value;
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_API}/api/student/update-student/${userId}`,
             {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: token || "",
                 },
                 body: JSON.stringify(data),
             }

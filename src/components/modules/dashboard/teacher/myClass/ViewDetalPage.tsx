@@ -33,7 +33,7 @@ const ViewDetalPage = () => {
 
   const [classInfo, setClassInfo] = useState<ClassData | null>(null);
   const [students, setStudents] = useState<StudentClass[]>([]);
-  console.log(classInfo);
+  console.log(students);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,16 +42,16 @@ const ViewDetalPage = () => {
         setLoading(true);
 
         const classRes = await fetch(
-          `http://localhost:5000/api/class/${classId}`
+          `https://school-management-system-server-eight.vercel.app/api/class/${classId}`
         );
         const classData = await classRes.json();
         setClassInfo(classData.data);
 
         const studentRes = await fetch(
-          `http://localhost:5000/api/student/classId/${classId}`
+          `https://school-management-system-server-eight.vercel.app/api/student/classId/${classId}`
         );
         const studentData = await studentRes.json();
-        setStudents(studentData.data);
+        setStudents(studentData?.data);
       } catch (error) {
         console.error("Error fetching class data:", error);
       } finally {
@@ -62,7 +62,7 @@ const ViewDetalPage = () => {
     if (classId) fetchClass();
   }, [classId]);
 
-  if (loading) return <Loading/>;
+  if (loading) return <Loading />;
   return (
     <div className="p-6 space-y-6">
       {/* Class Info */}
@@ -113,7 +113,7 @@ const ViewDetalPage = () => {
               </thead>
               <tbody>
                 {students.length > 0 ? (
-                  students.map((student, idx) => (
+                  students?.map((student, idx) => (
                     <tr key={student._id} className="hover:bg-gray-50">
                       <td className="border p-2">{idx + 1}</td>
                       <td className="border p-2">{student.name}</td>
@@ -121,12 +121,17 @@ const ViewDetalPage = () => {
                         {student.rollNumber || "-"}
                       </td>
                       <td className="border p-2">
-                        {student.enrollmentYear
-                          ? new Date(
+                        {student.enrollmentYear ? (
+                          <span suppressHydrationWarning>
+                            {new Date(
                               student.enrollmentYear
-                            ).toLocaleDateString()
-                          : "-"}
+                            ).toLocaleDateString()}
+                          </span>
+                        ) : (
+                          "-"
+                        )}
                       </td>
+
                       <td className="border p-2">
                         {student.contactPhone || "-"}
                       </td>

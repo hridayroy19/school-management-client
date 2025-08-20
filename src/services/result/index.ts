@@ -2,6 +2,7 @@
 "use server"
 
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
 
@@ -26,6 +27,7 @@ export const CreateResult = async (userData: FieldValues) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: (await cookies()).get("token")!.value,
             },
             body: JSON.stringify(userData),
         });

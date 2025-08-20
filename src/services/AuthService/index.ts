@@ -8,10 +8,14 @@ import { FieldValues } from "react-hook-form";
 
 export const registerUser = async (userData: FieldValues) => {
     try {
+        const cookieStore = cookies();
+        const token = (await cookieStore).get("token")?.value;
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: token || "",
             },
             body: JSON.stringify(userData),
         });

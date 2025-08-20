@@ -38,9 +38,9 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                 <div className="flex items-start justify-center">
                   <Image
                     src={Logo}
-                    width={180}
+                    width={170}
                     height={50}
-                    className="object-cover "
+                    className="object-cover"
                     alt="logo"
                   />
                 </div>
@@ -49,10 +49,10 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-gray-100">
         <NavMain items={filteredNav} />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="bg-gray-200">
         <NavUser />
       </SidebarFooter>
       <SidebarRail />

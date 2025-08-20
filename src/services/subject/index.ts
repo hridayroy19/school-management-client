@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
 
@@ -11,6 +12,7 @@ export const creteSubject = async (userData: FieldValues) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: (await cookies()).get("token")!.value,
             },
             body: JSON.stringify(userData),
         });
