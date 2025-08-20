@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, Users } from "lucide-react";
 import Link from "next/link";
+import { TStudent } from "@/types";
 
 interface ClassData {
   _id: string;
@@ -22,15 +23,30 @@ interface AssignedStudent {
   };
 }
 
+interface StudentApiResponse {
+  status: boolean;
+  statusCode: number;
+  message: string;
+  data: TStudent[];
+}
+
 interface MyClassManagementProps {
   asignStudent: AssignedStudent;
+  getClassStudent: StudentApiResponse;
 }
 
 const MyClassManagement: React.FC<MyClassManagementProps> = ({
   asignStudent,
+  getClassStudent,
 }) => {
+  console.log(getClassStudent, "data");
+
   const classes = asignStudent?.data?.assignedClasses || [];
   const subjects = asignStudent?.data?.subjects || [];
+
+  const studentCount = Array.isArray(getClassStudent?.data)
+    ? getClassStudent.data.length
+    : 0;
 
   return (
     <div>
@@ -53,7 +69,7 @@ const MyClassManagement: React.FC<MyClassManagementProps> = ({
               <CardContent className="space-y-3">
                 <div className="flex items-center gap-2 text-sm">
                   <Users className="w-4 h-4 text-white" />
-                  <span>{asignStudent.data.length || 0} Students</span>
+                  <span>{studentCount} Students</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <CalendarDays className="w-4 h-4 text-white" />

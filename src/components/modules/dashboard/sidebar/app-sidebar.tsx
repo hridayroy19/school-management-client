@@ -49,10 +49,10 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="bg-gray-100">
+      <SidebarContent>
         <NavMain items={filteredNav} />
       </SidebarContent>
-      <SidebarFooter className="bg-gray-200">
+      <SidebarFooter>
         <NavUser />
       </SidebarFooter>
       <SidebarRail />

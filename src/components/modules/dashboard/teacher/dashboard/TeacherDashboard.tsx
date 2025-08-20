@@ -1,31 +1,36 @@
 "use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { TStudent } from "@/types";
 
-interface Student {
+export interface StudentApiResponse {
+  status: boolean;
+  statusCode: number;
+  message: string;
+  data: TStudent[];
+}
+
+interface MappedStudent {
   id: string;
   name: string;
   rollNumber: string;
   contact: string;
+  address: string;
 }
 
-export default function TeacherDashboard() {
-  const assignedStudents: Student[] = [
-    {
-      id: "1",
-      name: "Alice Johnson",
-      rollNumber: "S101",
-      contact: "017xxxxxxxx",
-    },
-    { id: "2", name: "Bob Smith", rollNumber: "S102", contact: "018xxxxxxxx" },
-    {
-      id: "3",
-      name: "Charlie Brown",
-      rollNumber: "S103",
-      contact: "019xxxxxxxx",
-    },
-  ];
+const TeacherDashboard = ({
+  assignedStudents,
+}: {
+  assignedStudents: StudentApiResponse;
+}) => {
+  const students: MappedStudent[] = Array.isArray(assignedStudents?.data)
+    ? assignedStudents.data.map((student) => ({
+        id: student._id,
+        name: student.guardianName,
+        rollNumber: student.rollNumber,
+        contact: student.contactPhone,
+        address: student.address,
+      }))
+    : [];
 
   return (
     <div className="p-6 space-y-6">
@@ -37,7 +42,7 @@ export default function TeacherDashboard() {
             <CardTitle>Assigned Students</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-semibold">{assignedStudents.length}</p>
+            <p className="text-xl font-semibold">{students.length}</p>
           </CardContent>
         </Card>
 
@@ -67,24 +72,21 @@ export default function TeacherDashboard() {
         <CardContent>
           <table className="w-full table-auto border-collapse border border-gray-200">
             <thead>
-              <tr className="">
+              <tr>
                 <th className="border px-4 py-2 text-left">Name</th>
                 <th className="border px-4 py-2 text-left">Roll Number</th>
                 <th className="border px-4 py-2 text-left">Contact</th>
-                <th className="border px-4 py-2">Actions</th>
+                <th className="border px-4 py-2"> + Add Result</th>
               </tr>
             </thead>
             <tbody>
-              {assignedStudents.map((student) => (
+              {students.map((student) => (
                 <tr key={student.id}>
                   <td className="border px-4 py-2">{student.name}</td>
                   <td className="border px-4 py-2">{student.rollNumber}</td>
                   <td className="border px-4 py-2">{student.contact}</td>
-                  <td className="border px-4 py-2 space-x-2">
-                    <Button size="sm" variant="outline">
-                      View
-                    </Button>
-                    <Button size="sm">Update Result</Button>
+                  <td className="border flex justify-center py-2">
+                    {student.address}
                   </td>
                 </tr>
               ))}
@@ -94,4 +96,6 @@ export default function TeacherDashboard() {
       </Card>
     </div>
   );
-}
+};
+
+export default TeacherDashboard;

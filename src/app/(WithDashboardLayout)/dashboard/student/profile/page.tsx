@@ -9,7 +9,7 @@ const Profilepage = async() => {
       
       const results = resultsResponse?.data?.results || [];
       const studentData = resultsResponse?.data?.student;
-      // console.log(results, studentData ,"data")
+
 
   return (
     <div>
